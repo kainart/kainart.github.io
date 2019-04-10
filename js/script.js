@@ -106,15 +106,14 @@ more.addEventListener('click', () => {
     }
 
     sliceTitle('.videos__item-descr',99);
-    if (night=true) {
+    if (night===true) {
         document.querySelectorAll('.videos__item-descr').forEach(item => {
             item.style.color = '#fff';
         });
         document.querySelectorAll('.videos__item-views').forEach(item => {
             item.style.color = '#fff';
         });
-
-    }
+    } 
 });
 
 function sliceTitle(selector, count) {
