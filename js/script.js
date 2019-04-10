@@ -42,6 +42,10 @@ function switchMode() {
             item.style.color = '#fff';
         });
 
+        document.querySelectorAll('.videos__item img').forEach(item => {
+            item.style.boxShadow = '0 0 30px rgba(255, 255, 255, .50)';
+        });
+
         document.querySelectorAll('.header__item-descr').forEach(item => {
             item.style.color = '#fff';
         });
@@ -63,7 +67,9 @@ function switchMode() {
         document.querySelectorAll('.header__item-descr').forEach(item => {
             item.style.color = '#000';
         });
-        
+        document.querySelectorAll('.videos__item img').forEach(item => {
+            item.style.boxShadow = '0 0 30px rgba(0, 0, 0, .60)';
+        });
         document.querySelector('.logo > img').src = 'logo/kain.png';
     }
 }
@@ -113,6 +119,10 @@ more.addEventListener('click', () => {
         document.querySelectorAll('.videos__item-views').forEach(item => {
             item.style.color = '#fff';
         });
+        document.querySelectorAll('.videos__item img').forEach(item => {
+            item.style.boxShadow = '0 0 30px rgba(255, 255, 255, .50)';
+        });
+
     } 
 });
 
