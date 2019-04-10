@@ -46,7 +46,7 @@ function switchMode() {
             item.style.color = '#fff';
         });
         
-        document.querySelector('.logo > img').src = 'logo/youtube_night.svg';
+        document.querySelector('.logo > img').src = 'logo/kain_night.png';
     } else {
         night = false;
         document.body.classList.remove('night');
@@ -64,7 +64,7 @@ function switchMode() {
             item.style.color = '#000';
         });
         
-        document.querySelector('.logo > img').src = 'logo/youtube.svg';
+        document.querySelector('.logo > img').src = 'logo/kain.png';
     }
 }
 
@@ -75,10 +75,10 @@ switcher.addEventListener('change', () => {
 
 const data = [
     ['img/thumb_3.webp', 'img/thumb_4.webp', 'img/thumb_5.webp'], 
-    ['#3 Верстка на flexbox CSS | Блок преимущества и галерея | Марафон верстки | Артем Исламов',
-        '#2 Установка spikmi и работа с ветками на Github | Марафон вёрстки Урок 2', 
-        '#1 Верстка реального заказа landing Page | Марафон вёрстки | Артём Исламов'], 
-        ['3,6​тыс. просмотров', '4,2 тыс. просмотров', '28 тыс. просмотров'],  ['X9SmcY3lM-U', '7BvHoh0BrMw', 'mC8JW_aG2EM']
+    ['кАин - Мерцание | Анимационный клип к треку "Мерцание" из альбома "Потерянный Свет" 2006 года.',
+    'кАин - Маски | Анимационный клип к композиции "Маски" из альбома "НЕБылО" 2005г.', 
+    'ДжимФаер (Иллифия) | Конкурсная работа для игры DARK AGE "Бард мира Эйры"'], 
+    ['211 просмотров', '136 просмотров', '1 155 просмотров'],  ['R25dckIK2I4', 'ROafiLX5V_k', 'VRLDgW7rBng']
 ];
 
 more.addEventListener('click', () => {
