@@ -4,6 +4,8 @@ const switcher = document.querySelector('#cbx'),
       videos = document.querySelectorAll('.videos__item');
 let player;
 
+const videosWrapper = document.querySelector('.videos__wrapper');
+
 function bindSlideToggle(trigger, boxBody, content, openClass) {
     let button = {
         'element': document.querySelector(trigger),
@@ -132,9 +134,9 @@ function start() {
         });
     }).then(function(response){
         console.log(response.result);
-        const videosWrapper = document.querySelector('.videos_wrapper');
+        
 
-        response.result.items.forEach(item =>{
+        response.result.items.forEach(item => {
             let card = document.createElement('a');
 
             card.classList.add('videos__item', 'videos__item-active');
@@ -144,27 +146,28 @@ function start() {
                 <img src="${item.snippet.thumbnails.high.url}" alt="thumb">
                 <div class="videos__item-descr">
                     ${item.snippet.title}
-                </div>
+                </div><div class="videos__item-descr">
+                    ${item.snippet.description}
+            </div>
                 <div class="videos__item-views">
-                    111111111
+                    0
                 </div>
-               `;
-               videosWrapper.appendChild(card);
-
-               setTimeout(() => {
+            `;
+            videosWrapper.appendChild(card);
+            setTimeout(() => {
                 card.classList.remove('videos__item-active');
-               }, 10);
-              bindNewModal(card);
-             if (night===true) {
+            }, 10);
+              
+            if (night===true) {
                 card.querySelector('.videos__item-descr').style.color = '#fff';
                 card.querySelector('.videos__item-views').style.color = '#fff';
                 card.querySelector('.videos__item img').style.boxShadow = '0 0 30px rgba(255, 255, 255, .50)';
-             } 
+            } 
              
         }); 
 
-        sliceTitle();
-        bindModal(document.querySelectorAll('.videos_item'));
+        sliceTitle('.videos__item-descr', 99);
+        bindModal(document.querySelectorAll('.videos__item'));
     }).catch(e => {
         console.log(e);
     });
@@ -175,6 +178,64 @@ more.addEventListener('click', () => {
     more.remove();
     gapi.load('client', start);
 })
+
+function search(target) {
+    gapi.client.init({
+        'apiKey': 'AIzaSyBSs5Duq0g0tqBrJ3qvoMeOU6wzQCHyR_I',
+        'discoveryDocs': ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"]
+    }).then(function(){
+        return gapi.client.youtube.search.list({
+            'maxResults': '12',
+            'part': 'snippet',
+            'q': `$(target)`,
+            'type': ' '
+        });
+
+    }).then(function(response) {
+        console.log(response.result);
+        videosWrapper.innerHTML = '';
+        
+        response.result.items.forEach(item => {
+            let card = document.createElement('a');
+
+            card.classList.add('videos__item', 'videos__item-active');
+            card.setAttribute('data-url', item.id.videoId);
+                
+            card.innerHTML = `
+                <img src="${item.snippet.thumbnails.high.url}" alt="thumb">
+                <div class="videos__item-descr">
+                    ${item.snippet.title}
+                </div><div class="videos__item-descr">
+                    ${item.snippet.description}
+            </div>
+                <div class="videos__item-views">
+                    0
+                </div>
+            `;
+            videosWrapper.appendChild(card);
+            setTimeout(() => {
+                card.classList.remove('videos__item-active');
+            }, 10);
+              
+            if (night===true) {
+                card.querySelector('.videos__item-descr').style.color = '#fff';
+                card.querySelector('.videos__item-views').style.color = '#fff';
+                card.querySelector('.videos__item img').style.boxShadow = '0 0 30px rgba(255, 255, 255, .50)';
+            } 
+             
+        }); 
+
+        sliceTitle('.videos__item-descr', 99);
+        bindModal(document.querySelectorAll('.videos__item'));
+    })
+
+}
+
+document.querySelector('.search').addEventListener('submit', (e) => {
+    e.preventDefault();
+    gapi.load('client', () => {search(document.querySelector('.search > input').value)});
+});
+
 
 function sliceTitle(selector, count) {
     document.querySelectorAll(selector).forEach(item => {
