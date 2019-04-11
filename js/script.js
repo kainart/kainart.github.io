@@ -79,52 +79,69 @@ switcher.addEventListener('change', () => {
     switchMode();
 });
 
-const data = [
-    ['img/thumb_3.webp', 'img/thumb_4.webp', 'img/thumb_5.webp'], 
-    ['кАин - Мерцание | Анимационный клип к треку "Мерцание" из альбома "Потерянный Свет" 2006 года.',
-    'кАин - Маски | Анимационный клип к композиции "Маски" из альбома "НЕБылО" 2005г.', 
-    'ДжимФаер (Иллифия) | Конкурсная работа для игры DARK AGE "Бард мира Эйры"'], 
-    ['211 просмотров', '136 просмотров', '1 155 просмотров'],  ['R25dckIK2I4', 'ROafiLX5V_k', 'VRLDgW7rBng']
-];
+// const data = [
+//     ['img/thumb_3.webp', 'img/thumb_4.webp', 'img/thumb_5.webp'], 
+//     ['кАин - Мерцание | Анимационный клип к треку "Мерцание" из альбома "Потерянный Свет" 2006 года.',
+//     'кАин - Маски | Анимационный клип к композиции "Маски" из альбома "НЕБылО" 2005г.', 
+//     'ДжимФаер (Иллифия) | Конкурсная работа для игры DARK AGE "Бард мира Эйры"'], 
+//     ['211 просмотров', '136 просмотров', '1 155 просмотров'],  ['R25dckIK2I4', 'ROafiLX5V_k', 'VRLDgW7rBng']
+// ];
+
+// more.addEventListener('click', () => {
+//     const videosWrapper = document.querySelector('.videos__wrapper');
+//     more.remove();
+
+//     for(let i=0; i<data[0].length; i++) {
+//         let card = document.createElement('a');
+//         card.classList.add('videos__item', 'videos__item-active');
+//         card.setAttribute('data-url', data[3][i]);
+//         card.innerHTML = `
+//         <img src="${data[0][i]}" alt="thumb">
+//         <div class="videos__item-descr">
+//             ${data[1][i]}
+//         </div>
+//         <div class="videos__item-views">
+//             ${data[2][i]}
+//         </div>
+//         `;
+//         videosWrapper.appendChild(card);
+//         setTimeout(() => {
+//             card.classList.remove('videos__item-active');
+//         }, 10);
+//         bindNewModal(card);
+//         if (night===true) {
+//             card.querySelector('.videos__item-descr').style.color = '#fff';
+//             card.querySelector('.videos__item-views').style.color = '#fff';
+//             card.querySelector('.videos__item img').style.boxShadow = '0 0 30px rgba(255, 255, 255, .50)';
+               
+//     }
+
+//     sliceTitle('.videos__item-descr',99);
+//     } 
+// });
+
+function start() {
+    gapi.client.init({
+        'apiKey': 'AIzaSyBSs5Duq0g0tqBrJ3qvoMeOU6wzQCHyR_I',
+        'discoveryDocs': ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"]
+    }).then(function(){
+        return gapi.client.youtube.playlistitems.list({
+            "part": "snippet,contentDetails",
+            "maxResults": '6',
+            "playlistId": "PL8AA4ED2A2112FE3D"
+        })
+    }).then(function(response){
+        console.log(response.result);  
+    }).catch(e => {
+        console.log(e);
+    });
+
+}
 
 more.addEventListener('click', () => {
-    const videosWrapper = document.querySelector('.videos__wrapper');
     more.remove();
-
-    for(let i=0; i<data[0].length; i++) {
-        let card = document.createElement('a');
-        card.classList.add('videos__item', 'videos__item-active');
-        card.setAttribute('data-url', data[3][i]);
-        card.innerHTML = `
-        <img src="${data[0][i]}" alt="thumb">
-        <div class="videos__item-descr">
-            ${data[1][i]}
-        </div>
-        <div class="videos__item-views">
-            ${data[2][i]}
-        </div>
-        `;
-        videosWrapper.appendChild(card);
-        setTimeout(() => {
-            card.classList.remove('videos__item-active');
-        }, 10);
-        bindNewModal(card);
-    }
-
-    sliceTitle('.videos__item-descr',99);
-    if (night===true) {
-        document.querySelectorAll('.videos__item-descr').forEach(item => {
-            item.style.color = '#fff';
-        });
-        document.querySelectorAll('.videos__item-views').forEach(item => {
-            item.style.color = '#fff';
-        });
-        document.querySelectorAll('.videos__item img').forEach(item => {
-            item.style.boxShadow = '0 0 30px rgba(255, 255, 255, .50)';
-        });
-
-    } 
-});
+    gapi.load('client', start);
+})
 
 function sliceTitle(selector, count) {
     document.querySelectorAll(selector).forEach(item => {
@@ -178,6 +195,8 @@ modal.addEventListener('click', (e) => {
     }
 });
 
+document.addEventListener('keydown', function(evt){if (evt.keyCode === 27) {closeModal(); } });
+
 function createVideo(){
     var tag = document.createElement('script');
 
@@ -200,3 +219,6 @@ createVideo();
 function loadVideo(id) {
     player.loadVideoById({'videoId':`${id}`});
 }
+
+// AIzaSyBSs5Duq0g0tqBrJ3qvoMeOU6wzQCHyR_I
+
