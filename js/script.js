@@ -185,15 +185,18 @@ function search(target) {
         'discoveryDocs': ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"]
     }).then(function(){
         return gapi.client.youtube.search.list({
-            'maxResults': '12',
+            'maxResults': '9',
             'part': 'snippet',
-            'q': `$(target)`,
+            'q': `${target}`,
             'type': ' '
         });
 
     }).then(function(response) {
         console.log(response.result);
-        videosWrapper.innerHTML = '';
+        //videosWrapper.innerHTML = '';
+        while(videosWrapper.firstChild) {
+            videosWrapper.removeChild(videosWrapper.firstChild);
+        }
         
         response.result.items.forEach(item => {
             let card = document.createElement('a');
@@ -234,6 +237,7 @@ function search(target) {
 document.querySelector('.search').addEventListener('submit', (e) => {
     e.preventDefault();
     gapi.load('client', () => {search(document.querySelector('.search > input').value)});
+    document.querySelector('.search > input').value = '';
 });
 
 
