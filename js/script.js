@@ -125,13 +125,46 @@ function start() {
         'apiKey': 'AIzaSyBSs5Duq0g0tqBrJ3qvoMeOU6wzQCHyR_I',
         'discoveryDocs': ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"]
     }).then(function(){
-        return gapi.client.youtube.playlistitems.list({
+        return gapi.client.youtube.playlistItems.list({
             "part": "snippet,contentDetails",
             "maxResults": '6',
             "playlistId": "PL8AA4ED2A2112FE3D"
-        })
+        });
     }).then(function(response){
-        console.log(response.result);  
+        console.log(response.result);
+        const videosWrapper = document.querySelector('.videos_wrapper');
+
+        response.result.items.forEach(item =>{
+            let card = document.createElement('a');
+
+            card.classList.add('videos__item', 'videos__item-active');
+            card.setAttribute('data-url', item.contentDetails.videoId);
+                
+            card.innerHTML = `
+                <img src="${item.snippet.thumbnails.high.url}" alt="thumb">
+                <div class="videos__item-descr">
+                    ${item.snippet.title}
+                </div>
+                <div class="videos__item-views">
+                    111111111
+                </div>
+               `;
+               videosWrapper.appendChild(card);
+
+               setTimeout(() => {
+                card.classList.remove('videos__item-active');
+               }, 10);
+              bindNewModal(card);
+             if (night===true) {
+                card.querySelector('.videos__item-descr').style.color = '#fff';
+                card.querySelector('.videos__item-views').style.color = '#fff';
+                card.querySelector('.videos__item img').style.boxShadow = '0 0 30px rgba(255, 255, 255, .50)';
+             } 
+             
+        }); 
+
+        sliceTitle();
+        bindModal(document.querySelectorAll('.videos_item'));
     }).catch(e => {
         console.log(e);
     });
